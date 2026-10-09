@@ -19,8 +19,8 @@ public class UserEntity {
     @Column(name = "age")
     private Long age;
 
-    @Column(name = "createAt")
-    private LocalDateTime createAt;
+    @Column(name = "createdAt")
+    private LocalDateTime createdAt;
 
 
     public UserEntity() {
@@ -50,11 +50,11 @@ public class UserEntity {
         this.age = age;
     }
 
-    public LocalDateTime getCreateAt(LocalDateTime now) {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

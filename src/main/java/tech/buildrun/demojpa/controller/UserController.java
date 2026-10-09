@@ -1,8 +1,11 @@
 package tech.buildrun.demojpa.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.buildrun.demojpa.controller.dto.ApiResponse;
 import tech.buildrun.demojpa.controller.dto.CreateUserDto;
+import tech.buildrun.demojpa.controller.dto.PaginationResponse;
 import tech.buildrun.demojpa.controller.dto.UserUpdateDto;
 import tech.buildrun.demojpa.entity.UserEntity;
 import tech.buildrun.demojpa.service.UserService;
@@ -27,9 +30,20 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserEntity>> listAll(){
-       var users = userService.findAll();
-       return ResponseEntity.ok(users);
+    public ResponseEntity<ApiResponse<UserEntity>> listAll(@RequestParam(name = "page", defaultValue = "0") Integer page,
+                                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize){
+
+       var pageResponse = userService.findAll(page,pageSize);
+
+       return ResponseEntity.ok(new ApiResponse<>(
+               pageResponse.getContent(),
+               new PaginationResponse(
+                       pageResponse.getNumber(),
+                       pageResponse.getSize(),
+                       pageResponse.getTotalElements(),
+                       pageResponse.getTotalPages())
+
+       ));
     }
 
     @GetMapping(path = "/{userId}")
