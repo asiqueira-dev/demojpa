@@ -5,5 +5,4 @@ public record PaginationResponse(Integer page,
                                  Long totalElements,
                                  Integer totalPages) {
 
-
 }
