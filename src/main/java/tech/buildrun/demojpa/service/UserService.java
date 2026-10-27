@@ -54,12 +54,12 @@ public class UserService {
             return Optional.of(userRepository.findByAgeGreaterThanEqual(age, pageRequest));
         }
 
-        return Optional.empty();
+        return Optional.of(userRepository.findAll(pageRequest));
     }
 
     private PageRequest getPageRequest(Integer page, Integer pageSize, String orderBy) {
         var direction = "asc".equalsIgnoreCase(orderBy) ? Sort.Direction.ASC : Sort.Direction.DESC;
-        return PageRequest.of(page, pageSize, direction, "createdAt");
+        return PageRequest.of(page, pageSize, direction, "created_at");
     }
 
     public Optional<UserEntity> findById(Long userId) {
